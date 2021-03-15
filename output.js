@@ -1,5 +1,5 @@
 function processOutput(data) {
-    const {channel, status, event, message} = data
+    const { channel, status, event, message } = data
 
     switch (event) {
         case 'add':
@@ -41,6 +41,43 @@ function processOutput(data) {
             }
 
             console.log(`You can not write to channel ${channel}`)
+            return
+        case 'get':
+            const { products } = data
+
+            products.forEach((product, index) => {
+                console.log(
+                    `${index + 1}. ${product.name}
+                    \rCategory: ${product.category}
+                    \rID: ${product._id}`
+                )
+            })
+
+            return
+        case 'getOne':
+            const { product } = data
+
+            const specs = product.specs.reduce((acc, currentSpec, index) => {
+                const {key, value} = currentSpec
+                return acc + `\t${index + 1}. ${key}: ${value}\n`
+            }, '\n')
+
+            console.log(
+                `Name: ${product.name}
+                \rDescription: ${product.description}
+                \rCategory: ${product.category}
+                \rID: ${product._id}
+                \rSpecs: ${specs}`
+            )
+
+            return
+        case 'postOrder':
+            if (status) {
+                console.log(`Your successfully created order`)
+                return
+            }
+
+            console.log(`You can not create this order`)
             return
     }
 }

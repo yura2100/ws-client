@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 const processInput = require('./input')
 const processOutput = require('./output')
 
-const ws = new WebSocket('ws://localhost:3000')
+const ws = new WebSocket('ws://localhost:80')
 
 ws.onopen = () => processInput(ws, 'Enter your command:\n')
 ws.onmessage = ({data}) => {
